@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }}</title>
+    <style>
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            max-width: 600px;
+            width: 100%;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1a73e8;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        form input[type="text"],
+        form input[type="url"],
+        form input[type="file"],
+        form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1.8px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+            resize: vertical;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="url"]:focus,
+        form input[type="file"]:focus,
+        form textarea:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 10px rgba(26, 115, 232, 0.4);
+        }
+
+        button[type="submit"] {
+            background-color: #1a73e8;
+            color: #fff;
+            padding: 14px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #155ab6;
+        }
+
+        .profile-info {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 25px;
+        }
+
+        .profile-info h4 {
+            margin-bottom: 10px;
+            color: #1a73e8;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .profile-info p,
+        .profile-info a {
+            font-size: 16px;
+            color: #444;
+            word-wrap: break-word;
+        }
+
+        .profile-info img {
+            max-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(26, 115, 232, 0.2);
+            display: block;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+            .container {
+                padding: 20px 25px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            button[type="submit"] {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    {% block content %}
+    <div class="container">
+        <h2>Profilingizni tahrirlang</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit">Saqlash</button>
+        </form>
+
+        {% if profil.avatar %}
+        <div class="profile-info">
+            <h4>Joriy profil rasmi:</h4>
+            <img src="{{ profil.avatar.url }}" alt="Profil rasmi" />
+        </div>
+        {% endif %}
+
+        {% if profil.bio %}
+        <div class="profile-info">
+            <h4>Bio:</h4>
+            <p>{{ profil.bio }}</p>
+        </div>
+        {% endif %}
+
+        {% if profil.website %}
+        <div class="profile-info">
+            <h4>Saytingiz:</h4>
+            <a href="{{ profil.website }}" target="_blank" rel="noopener noreferrer">{{ profil.website }}</a>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+</body>
+</html>

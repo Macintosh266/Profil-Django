@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Post yaratish</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <style>
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        .form-container {
+            background-color: #fff;
+            max-width: 600px;
+            width: 100%;
+            padding: 35px 40px;
+            border-radius: 10px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            transition: box-shadow 0.3s ease;
+        }
+        .form-container:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1.8px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+            resize: vertical;
+        }
+        form input[type="text"]:focus,
+        form textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+        }
+        button.btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            padding: 14px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        button.btn-submit:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+            .form-container {
+                padding: 25px 30px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            button.btn-submit {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Post yaratish</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-submit">Yaratish</button>
+    </form>
+</div>
+
+</body>
+</html>
