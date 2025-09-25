@@ -1,11 +1,10 @@
 
-<!-- templates/404.html -->
 <!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahifa topilmadi - 404</title>
+    <title>Server xatosi - 500</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,8 +43,8 @@
 </head>
 <body>
     <div class="error-container">
-        <h1 class="error-code">404</h1>
-        <p class="error-message">{{ error_message|default:"Kechirasiz, siz qidirayotgan sahifa topilmadi." }}</p>
+        <h1 class="error-code">500</h1>
+        <p class="error-message">{{ error_message|default:"Server xatosi yuz berdi. Iltimos, keyinroq urinib ko'ring." }}</p>
         <a href="/" class="back-link">← Bosh sahifaga qaytish</a>
     </div>
 </body>

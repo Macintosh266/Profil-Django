@@ -10,12 +10,19 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = 'django-insecure-7#t7ja-q(ru1(#+dltp2^p$elwhe$vq1#$q()y&e5=rtfji6e+'
-DEBUG = True
-ALLOWED_HOSTS = []
 
+# MUHIM: Production uchun DEBUG = False qiling
+DEBUG = False  # Bu yerda False qiling
+
+# Production uchun ALLOWED_HOSTS ni to'g'ri sozlang
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'yourdomain.com',  # O'z domeningizni qo'shing
+    'www.yourdomain.com',
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -30,6 +37,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'app1.middleware.APIErrorHandlingMiddleware',  # Custom middleware qo'shing
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -43,10 +51,11 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # Global templates papkasi
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -57,7 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 DATABASES = {
     'default': {
@@ -65,7 +73,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -83,38 +90,105 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Email settings
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "mtosh662@gmail.com"
-EMAIL_HOST_PASSWORD = "ooiw dtdx fspo rcvp"
+EMAIL_HOST_PASSWORD = "ooiw dtdx fspo rcvp"  # Environment variable ishlatish yaxshiroq
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'  # Toshkent vaqt zonasi
 USE_I18N = True
 USE_TZ = True
-
 
 # Media settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-
-
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Xavfsizlik sozlamalari
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Logging sozlamalari - xatolarni kuzatish uchun
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'django_errors.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'app1': {  # O'z app'ingiz nomi
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+
+LOGS_DIR = BASE_DIR / 'logs'
+os.makedirs(LOGS_DIR, exist_ok=True)
+
+# Development va Production ni ajratish uchun
+if DEBUG:
+    # Development sozlamalari
+    ALLOWED_HOSTS = ['*']
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Production sozlamalari
+    SECURE_SSL_REDIRECT = True  # HTTPS ni majburiy qilish
+    SECURE_HSTS_SECONDS = 31536000  # HTTPS Strict Transport Security
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    
+    # Production uchun xavfsiz cookie'lar
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    
+    # Static fayllar uchun WhiteNoise (opsional)
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+

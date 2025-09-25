@@ -12,14 +12,10 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import FileResponse
-# from reportlab.pdfgen import canvas
-# from reportlab.lib.pagesizes import A4
-# from reportlab.lib.colors import HexColor
-# from reportlab.platypus import Paragraph
-# from reportlab.lib.styles import getSampleStyleSheet
-# from io import BytesIO
-
-from .models import UserProfil  # siz UserProfil nomi bilan yozgansiz
+from .models import UserProfil  
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 def LoginView(request):
@@ -144,13 +140,29 @@ def DeleteComment(request, pk):
     comment.delete()
     return redirect('home')
 
-class Custom404View(TemplateView):
-    template_name = "404.html"
+def custom_404(request, exception=None):
+    """Custom 404 handler API uchun"""
+    # API so'rov ekanligini tekshiring
+    if request.path.startswith('/api/'):
+        return JsonResponse({
+            'error': 'Not Found',
+            'message': 'The requested resource was not found.',
+            'status_code': 404
+        }, status=404)
+    
+    # Web sahifa uchun oddiy 404
+    return render(request, '404.html', status=404)
 
-    def render_to_response(self, context, **response_kwargs):
-        """Always return 404 status code with this template."""
-        response_kwargs.setdefault("status", 404)
-        return super().render_to_response(context, **response_kwargs)
+def custom_500(request):
+    """Custom 500 handler"""
+    if request.path.startswith('/api/'):
+        return JsonResponse({
+            'error': 'Internal Server Error',
+            'message': 'An internal server error occurred.',
+            'status_code': 500
+        }, status=500)
+    
+    return render(request, '500.html', status=500)
 
 def ProfileDetail(request):
     profil = UserProfil.objects.first()
@@ -213,134 +225,4 @@ def PasswordChange(request):
     else:
         form = PasswordChangeForm()
     return render(request, 'password_change.html', {'form': form})
-
-
-
-
-
-# def download_cv(request, user_id):
-#     profile = UserProfil.objects.get(user__id=user_id)  # Profilni olamiz
-#
-#     buffer = BytesIO()
-#     p = canvas.Canvas(buffer, pagesize=A4)
-#     width, height = A4
-#     y = height - 50
-#     styles = getSampleStyleSheet()
-#
-#     def new_page_if_needed(current_y, margin=50):
-#         nonlocal p
-#         if current_y < margin:
-#             p.showPage()
-#             p.setFillColor(HexColor("#0f1724"))
-#             p.rect(0, 0, width, height, fill=1)
-#             return height - 50
-#         return current_y
-#
-#     # Background
-#     p.setFillColor(HexColor("#0f1724"))
-#     p.rect(0, 0, width, height, fill=1)
-#
-#     # Header - Username + Bio
-#     p.setFont("Helvetica-Bold", 24)
-#     p.setFillColor(HexColor("#6EE7B7"))
-#     p.drawString(40, y, f"{profile.user.username} — Backend Developer")
-#     y -= 30
-#
-#     if profile.bio:
-#         y = new_page_if_needed(y)
-#         style = styles["Normal"]
-#         style.fontName = "Helvetica"
-#         style.fontSize = 12
-#         style.textColor = HexColor("#cfeef4")
-#         p_obj = Paragraph(profile.bio, style)
-#         w, h = p_obj.wrap(width - 80, y)
-#         p_obj.drawOn(p, 40, y - h)
-#         y -= h + 20
-#
-#     # Skills
-#     if profile.skills.exists():
-#         y = new_page_if_needed(y)
-#         p.setFont("Helvetica-Bold", 14)
-#         p.setFillColor(HexColor("#60A5FA"))
-#         p.drawString(40, y, "Ko‘nikmalar:")
-#         y -= 20
-#
-#         for skill in profile.skills.all():
-#             y = new_page_if_needed(y)
-#             p.setFont("Helvetica", 12)
-#             p.setFillColor(HexColor("#e6eef8"))
-#             p.drawString(50, y, f"- {skill.name}")
-#             y -= 15
-#         y -= 10
-#
-#     # Education
-#     if profile.education.exists():
-#         y = new_page_if_needed(y)
-#         p.setFont("Helvetica-Bold", 14)
-#         p.setFillColor(HexColor("#60A5FA"))
-#         p.drawString(40, y, "Ta'lim:")
-#         y -= 20
-#
-#         for edu in profile.education.all():
-#             y = new_page_if_needed(y)
-#             p.setFont("Helvetica-Bold", 12)
-#             p.setFillColor(HexColor("#e6eef8"))
-#             p.drawString(50, y, f"{edu.degree or ''} - {edu.institution}")
-#             y -= 15
-#             if edu.description:
-#                 style.fontSize = 11
-#                 p_obj = Paragraph(edu.description, style)
-#                 w, h = p_obj.wrap(width - 100, y)
-#                 p_obj.drawOn(p, 60, y - h)
-#                 y -= h + 15
-#
-#     # Projects (Postlardan)
-#     posts = profile.user.post_set.all()  # User bilan bog‘langan Postlar
-#     if posts.exists():
-#         y = new_page_if_needed(y)
-#         p.setFont("Helvetica-Bold", 14)
-#         p.setFillColor(HexColor("#60A5FA"))
-#         p.drawString(40, y, "Loyihalar:")
-#         y -= 20
-#
-#         for post in posts:
-#             y = new_page_if_needed(y)
-#             p.setFont("Helvetica-Bold", 12)
-#             p.setFillColor(HexColor("#e6eef8"))
-#             p.drawString(50, y, f"{post.title}")
-#             y -= 15
-#             style.fontSize = 11
-#             p_obj = Paragraph(post.content, style)
-#             w, h = p_obj.wrap(width - 100, y)
-#             p_obj.drawOn(p, 60, y - h)
-#             y -= h + 15
-#
-#     # Contact info
-#     y = new_page_if_needed(y)
-#     p.setFont("Helvetica-Bold", 14)
-#     p.setFillColor(HexColor("#60A5FA"))
-#     p.drawString(40, y, "Aloqa:")
-#     y -= 20
-#
-#     contact_info = [
-#         ("Telefon", profile.phone_number),
-#         ("Website", profile.website),
-#         ("Instagram", profile.instagram),
-#         ("Telegram", profile.telegram),
-#         ("Manzil", profile.address),
-#     ]
-#     for label, value in contact_info:
-#         if value:
-#             y = new_page_if_needed(y)
-#             p.setFont("Helvetica", 12)
-#             p.setFillColor(HexColor("#e6eef8"))
-#             p.drawString(50, y, f"{label}: {value}")
-#             y -= 15
-#
-#     # Finalize PDF
-#     p.showPage()
-#     p.save()
-#     buffer.seek(0)
-#
-#     return FileResponse(buffer, as_attachment=True, filename=f"{profile.user.username}_cv.pdf")
 

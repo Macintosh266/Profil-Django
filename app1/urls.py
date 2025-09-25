@@ -14,15 +14,13 @@ urlpatterns = [
     path('', ProfileDetail, name='profile_detail'),
     path('posts/create/', CreatePost, name='create_post'),
     path("add_comment/", add_comment, name="add_comment"),
-    # path("success/", views.success, name="success"),
     path('post/<int:pk>/', PostDetail, name='post_detail'),
     path('delete/post/<int:pk>/', DeletePost, name='delete_post'),
     path('delete/comment/<int:pk>/', DeleteComment, name='delete_comment'),
     path('/posts/<int:pk>/edit/',Post_Update,name='post_update'),
     path('Logout/', LogoutView, name='logout_user'),
     path('password/send/',PasswordChange,name='password_send'),
-    # path("cv/download/", download_cv, name="my_cv_download"),
-    # path("cv/<int:user_id>/download/",download_cv, name="download_cv"),
+
 
 ]
 if settings.DEBUG:

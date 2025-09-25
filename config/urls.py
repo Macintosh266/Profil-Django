@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from app1.views import Custom404View
+from app1.views import custom_404,custom_500 
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,4 +29,6 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     if hasattr(settings, 'MEDIA_URL'):
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# handler404 = Custom404View.as_view()
+
+handler404 = 'app1.views.custom_404'
+handler500 = 'app1.views.custom_500'
