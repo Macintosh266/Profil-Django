@@ -22,8 +22,9 @@ urlpatterns = [
     path('Logout/', LogoutView, name='logout_user'),
     path('password/send/',PasswordChange,name='password_send'),
     # path("cv/download/", download_cv, name="my_cv_download"),
-    path("cv/<int:user_id>/download/",download_cv, name="download_cv"),
+    # path("cv/<int:user_id>/download/",download_cv, name="download_cv"),
 
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

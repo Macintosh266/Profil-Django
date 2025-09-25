@@ -3,400 +3,230 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{title}}</title>
+  <title>{{ title }}</title>
+  
+  <!-- External CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg-dark: #0f0f10;
-      --bg-light: #18181b;
-      --text-light: #b5b5b5;
-      --text-bright: #fff;
-      --accent: #4e9cff;
-      --card-bg: #1c1c1f;
-      --radius: 14px;
-      --shadow: 0 6px 25px rgba(0,0,0,0.45);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      line-height: 1.7;
-      scroll-behavior: smooth;
-    }
-    a { color: var(--accent); text-decoration: none; }
-
-    header {
-      background: linear-gradient(135deg, #1c1c1f, #141416);
-      color: var(--text-bright);
-      padding: 5rem 1rem 3rem;
-      text-align: center;
-      box-shadow: inset 0 -2px 20px rgba(0,0,0,0.6);
-    }
-    header h1 {
-      font-size: 3.2rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: 1px;
-    }
-    header p { font-size: 1.15rem; color: var(--text-light); }
-
-    section {
-      max-width: 1100px;
-      margin: 4rem auto;
-      padding: 0 1.5rem;
-    }
-    h2 {
-      font-size: 2.3rem;
-      margin-bottom: 2rem;
-      color: var(--text-bright);
-      border-left: 5px solid var(--accent);
-      padding-left: 1rem;
-    }
-
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-    .skill-badge {
-      background-color: var(--accent);
-      color: white;
-      padding: 0.55rem 1.3rem;
-      border-radius: 30px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: transform 0.3s ease, background 0.3s ease;
-      box-shadow: 0 3px 10px rgba(78,156,255,0.35);
-    }
-    .skill-badge:hover {
-      transform: scale(1.1);
-      background: #3399ff;
-    }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 2.2rem;
-    }
-    .project {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-    .project:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.55);
-    }
-    .project img { width: 100%; height: 200px; object-fit: cover; }
-    .project .content { padding: 1.2rem; }
-    .project .content h3 { color: var(--text-bright); margin-bottom: 0.5rem; }
-    .tags span {
-      display: inline-block;
-      background-color: var(--accent);
-      color: white;
-      padding: 4px 10px;
-      border-radius: 5px;
-      font-size: 0.78rem;
-      margin: 6px 6px 0 0;
-    }
-    .project a {
-      display: inline-block;
-      margin-top: 1rem;
-      font-weight: 600;
-      color: var(--accent);
-      transition: color 0.3s ease;
-    }
-    .project a:hover { color: #66b2ff; }
-
-    .download-cv {
-      margin: 2rem auto;
-      text-align: center;
-    }
-    .download-cv a {
-      display: inline-block;
-      background: linear-gradient(135deg, #007bff, #0056b3);
-      color: white;
-      padding: 0.8rem 1.8rem;
-      border-radius: 40px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,123,255,0.35);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .download-cv a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0,123,255,0.45);
-    }
-    .download-cv i { margin-right: 8px; }
-
-    .education {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .edu-item h3 { color: var(--accent); margin-bottom: 0.5rem; }
-
-    .contact-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: space-between;
-      background-color: var(--bg-light);
-      padding: 2.5rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .contact-info { flex: 1 1 320px; }
-    .contact-info-item {
-      display: flex;
-      align-items: start;
-      margin-bottom: 1.7rem;
-    }
-    .contact-info-item i {
-      color: var(--accent);
-      font-size: 1.6rem;
-      margin-right: 1rem;
-    }
-    .contact-info-item h4 {
-      margin-bottom: 0.3rem;
-      color: var(--text-bright);
-    }
-
-    form {
-      flex: 1 1 320px;
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1.2rem;
-      border: none;
-      border-radius: 7px;
-      background: #2b2b2f;
-      color: white;
-      font-size: 0.95rem;
-    }
-    form input:focus, form textarea:focus {
-      outline: 2px solid var(--accent);
-    }
-    form button {
-      background: var(--accent);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 7px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background 0.3s ease, transform 0.3s ease;
-      width: 100%;
-    }
-    form button:hover {
-      background: #3399ff;
-      transform: translateY(-2px);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2.2rem 1rem;
-      background: var(--bg-light);
-      color: #888;
-      margin-top: 4rem;
-    }
-    .social-icons a {
-      color: #bbb;
-      margin: 0 12px;
-      font-size: 1.5rem;
-      transition: transform 0.3s, color 0.3s;
-    }
-    .social-icons a:hover { color: var(--accent); transform: scale(1.25); }
-
-    /* Animations */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .avatar-wrapper { display: flex; justify-content: center; margin-bottom: 1.2rem; }
-    .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--accent);
-      box-shadow: 0 0 18px rgba(0, 123, 255, 0.5);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-    .avatar:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 25px rgba(0, 123, 255, 0.65);
-    }
-
-    @media(max-width: 768px) {
-      header h1 { font-size: 2.4rem; }
-      .skills { flex-direction: column; align-items: center; }
-      .project img { height: 160px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <!-- Custom CSS -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
 </head>
 <body>
 
-<header style="background: linear-gradient(135deg, #1c1c1f, #141416); color: white; text-align: center; padding: 3rem 1rem; box-shadow: inset 0 -2px 20px rgba(0,0,0,0.6);">
-  <div style="display:flex; justify-content:center; margin-bottom:1rem;">
-<img src="{{profil.avatar.url}}" alt="{{ user.username }} profile picture"
-     style="width:140px; height:140px; border-radius:50%; object-fit:cover; border:4px solid #4e9cff; box-shadow:0 0 15px rgba(0,123,255,0.4);" />
+<!-- Navigation -->
+<nav>
+  <div class="nav-container">
+    <div class="nav-logo">Profile</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="login">Login</a></li>
+    </ul>
+    <div class="burger" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
-  <h1 style="font-size:2.5rem; margin-bottom:0.5rem;">{{ user.username }}</h1>
-  <p style="font-size:1.1rem; color:#ccc;">Backend Developer | Django</p>
-  <p style="color:#aaa; margin-top:0.5rem;">{{ profil.address }}</p>
+</nav>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="hero-content">
+      <div class="avatar-wrapper">
+        <img src="{{ profil.avatar.url|default:'https://via.placeholder.com/180x180/667eea/ffffff?text=User' }}" 
+             alt="{{ user.username|default:'User' }} profile picture" 
+             class="avatar" 
+             onerror="this.src='https://via.placeholder.com/180x180/667eea/ffffff?text=User'" />
+      </div>
+      <h1 class="hero-title">{{ user.username|default:'Your Name' }}</h1>
+      <p class="hero-subtitle">Backend Developer | Django Specialist</p>
+      <p class="hero-location">{{ profil.address|default:'Your Location' }}</p>
+    </div>
+  </div>
 </header>
 
-
-<section class="fade-in">
-  <h2>About Me</h2>
-  <p>
-    {{profil.bio}}
-    <br><br>
-    I love solving problems, automating tasks, and writing clean, maintainable code. Always open to collaboration and new opportunities.
-  </p>
-  <div class="skills">
-    {% for skill in skills %}
-      <span class="skill-badge">{{ skill }}</span>
-    {% endfor %}
-  </div>
-</section>
-
-<section class="fade-in">
-  <h2>Portfolio</h2>
-  <div class="projects">
-    {%for port in post%}
-    <div class="project">
-      <img src="https://picsum.photos/200" alt="s-lms.uz/swagger">
-      <div class="content">
-        <h3></h3>
-        <p>{{port.title}}</p>
-        <a href="{{port.link}}" target="_blank">Open Project</a>
+<!-- About Section -->
+<section id="about" class="fade-in" style="background: var(--bg-primary); min-height: 500px;">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <p class="about-text">
+        {{ profil.bio|default:"I am a passionate developer with experience in creating modern web applications. I love solving complex problems and building user-friendly solutions." }}
+        <br><br>
+        I love solving problems, automating tasks, and writing clean, maintainable code. Always open to collaboration and new opportunities.
+      </p>
+      <div class="skills">
+        {% for skill in skills %}
+          <span class="skill-badge">{{ skill }}</span>
+        {% empty %}
+          <span class="skill-badge">Python</span>
+          <span class="skill-badge">Django</span>
+          <span class="skill-badge">JavaScript</span>
+          <span class="skill-badge">HTML/CSS</span>
+          <span class="skill-badge">PostgreSQL</span>
+        {% endfor %}
       </div>
     </div>
-    {% endfor%}
-<!--    <div class="project">-->
-<!--      <img src="/media/portfolio/Screenshot_20250211_134205_Chrome_7HPErTV.jpg" alt="s-news.uz">-->
-<!--      <div class="content">-->
-<!--        <h3>s-news.uz</h3>-->
-<!--        <p>News site with admin & user interface.</p>-->
-<!--        <div class="tags"><span>Django</span><span>HTML</span><span>JavaScript</span></div>-->
-<!--        <a href="https://s-news.uz" target="_blank">Open Project</a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="project">-->
-<!--      <img src="/media/portfolio/Screenshot_20250419_163644_Chrome_OOiuLbr.jpg" alt="s-libraries.uz">-->
-<!--      <div class="content">-->
-<!--        <h3>s-libraries.uz</h3>-->
-<!--        <p>Library system with full API doc.</p>-->
-<!--        <div class="tags"><span>DRF</span><span>Swagger</span></div>-->
-<!--        <a href="https://s-libraries.uz/swagger" target="_blank">Open Project</a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="project">-->
-<!--      <img src="/media/portfolio/IMG_20250717_122208_577.jpg" alt="Ish Bor | Ish kerak">-->
-<!--      <div class="content">-->
-<!--        <h3>Ish Bor | Ish kerak</h3>-->
-<!--        <p>Telegram bot for job posts.</p>-->
-<!--        <div class="tags"><span>Aiogram</span><span>PostgreSQL</span></div>-->
-<!--        <a href="https://t.me/Ish_elonlar_abot" target="_blank">Open Project</a>-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
 </section>
 
-<div class="download-cv">
-  <a href="{% url 'download_cv' profil.user.id %}">
-    <i class="fas fa-download"></i> Download CV (PDF)
-  </a>
-</div>
-
-
-<section class="fade-in">
-  <h2>Education</h2>
-  <div class="education">
-    <div class="edu-item">
-        <p></p>
-      {% for educ in education%}
-      <h3>{{ educ.institution }}</h3>
-      <p><strong>Bakalavr:</strong> {{educ.field_of_study}}</p>
-      <p><strong>Yillar:</strong>{{educ.start_date}}-{{educ.end_date}}</p>
+<!-- Portfolio Section -->
+<section id="portfolio" class="fade-in" style="background: var(--bg-secondary); min-height: 500px;">
+  <div class="container">
+    <h2 class="section-title">Portfolio</h2>
+    <div class="projects">
+      {% for port in post %}
+      <div class="project">
+        <div class="project-image">
+          <img src="https://picsum.photos/400/220?random={{ forloop.counter }}" alt="{{ port.title }}">
+          <div class="project-overlay">
+            <a href="{{ port.link }}" target="_blank" class="project-link" style="background: white; color: var(--accent-primary); padding: 0.8rem 1.5rem; border-radius: var(--radius-md); font-weight: 600;">
+              <i class="fas fa-external-link-alt"></i> View Project
+            </a>
+          </div>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">{{ port.title }}</h3>
+          <p class="project-description">An innovative solution built with modern technologies and best practices.</p>
+          <a href="{{ port.link }}" target="_blank" class="project-link">
+            Open Project <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      {% empty %}
+      <!-- Sample projects for empty state -->
+      <div class="project">
+        <div class="project-image">
+          <img src="https://picsum.photos/400/220?random=1" alt="Sample Project 1">
+          <div class="project-overlay">
+            <a href="#" class="project-link" style="background: white; color: var(--accent-primary); padding: 0.8rem 1.5rem; border-radius: var(--radius-md); font-weight: 600;">
+              <i class="fas fa-external-link-alt"></i> View Project
+            </a>
+          </div>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">E-commerce Platform</h3>
+          <p class="project-description">A modern online store with full functionality and user-friendly interface.</p>
+          <a href="#" class="project-link">
+            Open Project <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="project">
+        <div class="project-image">
+          <img src="https://picsum.photos/400/220?random=2" alt="Sample Project 2">
+          <div class="project-overlay">
+            <a href="#" class="project-link" style="background: white; color: var(--accent-primary); padding: 0.8rem 1.5rem; border-radius: var(--radius-md); font-weight: 600;">
+              <i class="fas fa-external-link-alt"></i> View Project
+            </a>
+          </div>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Task Management App</h3>
+          <p class="project-description">A productivity app for managing tasks and team collaboration.</p>
+          <a href="#" class="project-link">
+            Open Project <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<section id="contact" class="fade-in">
-  <h2>Contact Me</h2>
-  <div class="contact-container">
-    <div class="contact-info">
-      <div class="contact-info-item">
-        <i class="fa fa-location-arrow"></i>
-        <div><h4>Address</h4><p>{{profil.address}}</p></div>
-      </div>
-      <div class="contact-info-item">
-        <i class="fa fa-envelope"></i>
-        <div><h4>Email</h4><a href="mailto:{{user.email}}">{{user.email}}</a></div>
-      </div>
-      <div class="contact-info-item">
-        <i class="fa fa-phone"></i>
-        <div><h4>Phone</h4><a href="tel:{{profil.phone_number}}">{{profil.phone_number}}</a></div>
-      </div>
-    </div>
-    <form method="POST" action="{% url 'add_comment' %}">
-      {% csrf_token %}
-      <input type="text" name="first_name" placeholder="First Name" required>
-      <input type="text" name="last_name" placeholder="Last Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+<!-- Download CV -->
+<div class="download-cv">
+  <a href="{{ profil.website|default:'#'}}">
+    <i class="fas fa-download"></i> Download CV (PDF)
+  </a>
+</div>
 
+<!-- Education Section -->
+<section id="education" class="fade-in">
+  <div class="container">
+    <h2 class="section-title">Education</h2>
+    <div class="education">
+      {% for educ in education %}
+      <div class="edu-item">
+        <h3>{{ educ.institution }}</h3>
+        <p><strong>Degree:</strong> {{ educ.field_of_study }}</p>
+        <p><strong>Years:</strong> {{ educ.start_date }} - {{ educ.end_date }}</p>
+      </div>
+      {% empty %}
+      <div class="edu-item">
+        <h3>University Name</h3>
+        <p><strong>Degree:</strong> Computer Science</p>
+        <p><strong>Years:</strong> 2020 - 2024</p>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </section>
 
+<!-- Contact Section -->
+<section id="contact" class="fade-in">
+  <div class="container">
+    <h2 class="section-title">Contact Me</h2>
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <h4>Address</h4>
+            <p>{{ profil.address|default:'Your Location' }}</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:{{ user.email|default:'your@email.com' }}">{{ user.email|default:'your@email.com' }}</a>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <h4>Phone</h4>
+            <a href="tel:{{ profil.phone_number|default:'+998901234567' }}">{{ profil.phone_number|default:'+998 90 123 45 67' }}</a>
+          </div>
+        </div>
+      </div>
+      
+      <form method="POST" action="{% url 'add_comment' %}">
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
 <footer>
-  <p>&copy; 2025 Mutalov. All rights reserved.</p>
-  <div class="social-icons">
-    <a href="{{profil.telegram}}"><i class="fab fa-telegram"></i></a>
-    <a href="{{profil.instagramm}}"><i class="fab fa-instagram"></i></a>
-    <a href="https://github.com/nematov-dev"><i class="fab fa-github"></i></a>
-    <a href="https://taplink.cc/nematov.dev"><i class="fas fa-link"></i></a>
+  <div class="container">
+    <div class="social-icons">
+      <a href="{{ profil.telegram|default:'#' }}" title="Telegram"><i class="fab fa-telegram"></i></a>
+      <a href="{{ profil.instagram|default:'#' }}" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="{{ profil.github|default:'#'}} title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" title="Website"><i class="fas fa-globe"></i></a>
+    </div>
+    <p>&copy; 2025 {{ user.username|default:'Your Name' }}. All rights reserved.</p>
   </div>
 </footer>
 
-<script>
-  const faders = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  faders.forEach(el => observer.observe(el));
-</script>
+<!-- Custom JavaScript - Bu yerda to'g'ri joyda -->
+<script src="{% static 'js/portfolio.js' %}"></script>
 
 </body>
 </html>

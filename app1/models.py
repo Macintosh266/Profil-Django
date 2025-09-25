@@ -36,6 +36,7 @@ class UserProfil(models.Model):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     instagram = models.URLField(blank=True, null=True)
     telegram = models.URLField(blank=True, null=True)
+    github=models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
