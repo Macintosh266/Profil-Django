@@ -12,11 +12,9 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import FileResponse
-from .models import UserProfil  
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
-
+from django.conf import settings
 
 def LoginView(request):
     if request.method == 'POST':
@@ -88,7 +86,6 @@ def CreatePost(request):
     return render(request, 'create_post.html', {'form': form})
 
 
-@login_required(login_url='login_user')
 def add_comment(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
@@ -106,8 +103,8 @@ def add_comment(request):
         send_mail(
             subject=f"Portfolio contact: {first_name} {last_name}",
             message=full_message,
-            from_email=email,
-            recipient_list=["mtosh662@gmail.com"],  # Sizning emailingiz
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=["mtosh662@gmail.com"],
         )
         return redirect('profile_detail')
 
@@ -165,17 +162,18 @@ def custom_500(request):
     return render(request, '500.html', status=500)
 
 def ProfileDetail(request):
-    profil = UserProfil.objects.first()
+    profil = UserProfil.objects.all().first()
     skill=Skill.objects.all()
     education=Education.objects.all()
     post=Post.objects.all()
+    user=User.objects.all().first()
     context = {
         'profil': profil,
         'title': 'Profil ma\'lumotlari',
         'skills':skill,
         'education':education,
-        'post':post
-        # 'user':user,
+        'post':post,
+        'user':user,
     }
 
     return render(request, 'profil_detail.html', context=context)

@@ -84,7 +84,7 @@
       {% for port in post %}
       <div class="project">
         <div class="project-image">
-          <img src="https://picsum.photos/400/220?random={{ forloop.counter }}" alt="{{ port.title }}">
+          <img src="{% if port.photo %}{{ port.photo.url }}{% else %}https://picsum.photos/400/220?random={{ forloop.counter }}{% endif %}" alt="{{ port.title }}">
           <div class="project-overlay">
             <a href="{{ port.link }}" target="_blank" class="project-link" style="background: white; color: var(--accent-primary); padding: 0.8rem 1.5rem; border-radius: var(--radius-md); font-weight: 600;">
               <i class="fas fa-external-link-alt"></i> View Project

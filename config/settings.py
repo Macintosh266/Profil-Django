@@ -14,14 +14,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7#t7ja-q(ru1(#+dltp2^p$elwhe$vq1#$q()y&e5=rtfji6e+'
 
 # MUHIM: Production uchun DEBUG = False qiling
-DEBUG = False  # Bu yerda False qiling
+DEBUG = False
 
 # Production uchun ALLOWED_HOSTS ni to'g'ri sozlang
 ALLOWED_HOSTS = [
     'localhost',
-    '127.0.0.1',
-    'yourdomain.com',  # O'z domeningizni qo'shing
-    'www.yourdomain.com',
+    '46.101.203.157',
+   
 ]
 
 # Application definition
@@ -95,12 +94,12 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "mtosh662@gmail.com"
-EMAIL_HOST_PASSWORD = "ooiw dtdx fspo rcvp"  # Environment variable ishlatish yaxshiroq
+EMAIL_HOST_PASSWORD = "jxab guew qexb wcpz" 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Tashkent'  # Toshkent vaqt zonasi
+TIME_ZONE = 'Asia/Tashkent'  
 USE_I18N = True
 USE_TZ = True
 
