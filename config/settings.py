@@ -18,7 +18,7 @@ DEBUG = False
 
 # Production uchun ALLOWED_HOSTS ni to'g'ri sozlang
 ALLOWED_HOSTS = [
-    'localhost',
+    '*',
     '46.101.203.157',
    
 ]
