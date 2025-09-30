@@ -170,24 +170,3 @@ LOGGING = {
 LOGS_DIR = BASE_DIR / 'logs'
 os.makedirs(LOGS_DIR, exist_ok=True)
 
-# Development va Production ni ajratish uchun
-if DEBUG:
-    # Development sozlamalari
-    ALLOWED_HOSTS = ['*']
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    # Production sozlamalari
-    SECURE_SSL_REDIRECT = True  # HTTPS ni majburiy qilish
-    SECURE_HSTS_SECONDS = 31536000  # HTTPS Strict Transport Security
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    
-    # Production uchun xavfsiz cookie'lar
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    
-    # Static fayllar uchun WhiteNoise (opsional)
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
