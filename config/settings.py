@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-7#t7ja-q(ru1(#+dltp2^p$elwhe$vq1#$q()y&e5=rtfji6e+
 DEBUG = False
 
 # Production uchun ALLOWED_HOSTS ni to'g'ri sozlang
-ALLOWED_HOSTS = ['*','46.101.203.157']
+ALLOWED_HOSTS = ['*','164.92.228.36']
 
 
 # Application definition
@@ -167,9 +167,12 @@ LOGGING = {
 LOGS_DIR = BASE_DIR / 'logs'
 os.makedirs(LOGS_DIR, exist_ok=True)
 
+<<<<<<< HEAD
 
 
 
 
 
 
+=======
+>>>>>>> 29e2cf4c22926e2bfd67864855d5d48582889e91
